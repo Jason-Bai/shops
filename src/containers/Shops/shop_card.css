@@ -1,0 +1,13 @@
+.shop-card-image img {
+  display: block;
+}
+.shop-card-content {
+  padding: 10px 16px;
+  overflow: hidden;
+  font-size: 14px;
+}
+.shop-card-content p {
+  font-size: 12px;
+  color: #999;
+  overflow: hidden;
+}
