@@ -2,16 +2,16 @@ import React from 'react';
 import { Badge, Card } from 'antd';
 import "./shop_card.css";
 
-const ShopCard = ({ imgUrl, title, desc, count }) => (
+const ShopCard = ({ logo, name, site, total }) => (
   <Card style={{ width: '100%' }} bodyStyle={{ padding: 0 }}>
     <div className="shop-card-image">
-      <Badge count={count || 1} style={{ backgroundColor: '#87d068' }}>
-        <img alt={desc} width="100%" src={imgUrl} />
+      <Badge count={total || 1} style={{ backgroundColor: '#87d068' }}>
+        <img alt={name} width="100%" src={logo} />
       </Badge>
     </div>
     <div className="shop-card-content">
-      <h3>{title}</h3>
-      <p>{desc}</p>
+      <h3>{name}</h3>
+      <p>{site}</p>
     </div>
   </Card>
 );

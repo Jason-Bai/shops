@@ -1,69 +1,74 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 import { Row, Col } from 'antd';
 import "./shops.css";
 import Helmet from '../../components/Helmet';
 import Shop from './Shop';
 import ShopCard from './ShopCard';
-
-const items = [{
-  id: 1,
-  title: 'Node.js',
-  desc: 'nodejs.org',
-  imgUrl: 'https://nodejs.org/static/images/logo.svg',
-}, {
-  id: 2,
-  title: 'Python',
-  desc: 'www.instagram.com',
-  imgUrl: 'https://nodejs.org/static/images/logo.svg',
-}, {
-  id: 3,
-  title: 'C#',
-  desc: 'www.instagram.com',
-  imgUrl: 'https://nodejs.org/static/images/logo.svg',
-}, {
-  id: 4,
-  title: 'Java',
-  desc: 'www.instagram.com',
-  imgUrl: 'https://nodejs.org/static/images/logo.svg',
-}, {
-  id: 5,
-  title: 'Golang',
-  desc: 'www.instagram.com',
-  imgUrl: 'https://nodejs.org/static/images/logo.svg',
-}, {
-  id: 6,
-  title: 'C',
-  desc: 'www.instagram.com',
-  imgUrl: 'https://nodejs.org/static/images/logo.svg',
-}];
+import fetch from '../../utils/fetch';
 
 const metas = [{
   name: 'shops',
   content: 'node interview question shops',
 }];
 
-const Shops = ({ match }) => (
-  <div className="shops">
-    <Helmet title="商店" metas={metas} />
+class Shops extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null,
+      data: [],
+    };
+  }
 
-    <h2>Shop</h2>
+  componentWillMount() {
+    fetch.get('/shops.json').then((res) => {
+      const { data } = res;
+      this.setState({
+        error: null,
+        data,
+      });
+    }).catch((err) => {
+      const error = err || err.message;
+      this.setState({
+        error,
+      });
+    });
+  }
 
-    <Row className="shop-items">
-      {items.map((item) => (
-        <Col key={item.id} className="shop-item" xs={24} sm={4} md={4} lg={4} xl={4}>
+  render() {
+    const { error, data } = this.state;
+
+    const { match } = this.props;
+
+    return (
+      <div className="shops">
+        <Helmet title="商店" metas={metas} />
+
+        {error && (
+          <div className="error">{error}</div>
+        )}
+
+        <h2>Shop</h2>
+
+        <Row className="shop-items">
+        {data.map((item) => (
+          <Col key={item.id} className="shop-item" xs={24} sm={4} md={4} lg={4} xl={4}>
           <Link to={`${match.url}/${item.id}`}>
-            <ShopCard {...item} />
+          <ShopCard {...item} />
           </Link>
-        </Col>
-      ))}
-    </Row>
+          </Col>
+        ))}
+        </Row>
 
-    <Route path={`${match.path}/:shopId`} component={Shop} />
-    <Route exact path={match.path} render={() => (
-      <h3>Please select a shop.</h3>
-    )}/>
-  </div>
-);
-
+        <Switch>
+          <Route path={`${match.path}/:shopId`} component={Shop} />
+          <Route exact path={match.path} render={() => (
+            <h3>Please select a shop.</h3>
+          )}/>
+        </Switch>
+      </div>
+    )
+  };
+};
 export default Shops;

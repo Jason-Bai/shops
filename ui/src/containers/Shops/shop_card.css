@@ -1,4 +1,9 @@
+.shop-card-image {
+  padding: 10px;
+}
 .shop-card-image img {
+  height: 100px;
+  max-height: 100px;
   display: block;
 }
 .shop-card-content {

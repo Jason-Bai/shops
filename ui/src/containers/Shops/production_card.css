@@ -1,0 +1,25 @@
+.production-card {
+  padding: 20px 0;
+}
+.production-card .ant-card {
+  border: none !important;
+}
+.production-card .production-hd {
+}
+.production-card .production-hd .production-title, .production-card .production-hd .production-source{
+  font-size: 16px;
+  display: inline-block;
+}
+.production-card .production-hd .production-source {
+  font-size: 14px;
+  margin-left: 5px;
+  color: #828282;
+}
+.production-card .production-fd {
+  padding: 10px 0;
+  clear: both;
+  overflow: hidden;
+}
+.production-card .production-fd .answer, .production-card .production-fd .like {
+  margin-right: 10px;
+}
